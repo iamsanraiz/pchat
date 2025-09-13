@@ -2,26 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatMax - World's Best Chat App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ChatMax Pro - Ultimate Mobile Chat</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQ2hhdE1heCIsInNob3J0X25hbWUiOiJDaGF0TWF4IiwiaWNvbnMiOltdLCJzdGFydF91cmwiOiIvIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJ0aGVtZV9jb2xvciI6IiM2MzY2ZjEiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiI2Y5ZmFmYiJ9">
-    <meta name="theme-color" content="#6366f1">
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQ2hhdE1heCBQcm8iLCJzaG9ydF9uYW1lIjoiQ2hhdE1heCIsImljb25zIjpbXSwic3RhcnRfdXJsIjoiLyIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwidGhlbWVfY29sb3IiOiIjMTk3NmQyIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmOWZhZmIifQ==">
+    <meta name="theme-color" content="#1976d2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <!-- Theme Toggle -->
-    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
-        <span class="material-icons">dark_mode</span>
-    </button>
-
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
-        <div class="loading-spinner"></div>
-        <h2>ChatMax</h2>
+        <div class="loading-animation">
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring"></div>
+        </div>
+        <h1>ChatMax Pro</h1>
         <p>Loading your conversations...</p>
     </div>
 
@@ -29,260 +30,474 @@
     <div id="auth-screen" class="auth-screen">
         <div class="auth-container">
             <div class="auth-header">
-                <h1>Welcome to ChatMax</h1>
-                <p>Connect with friends and family worldwide</p>
+                <div class="app-logo">💬</div>
+                <h1>Welcome to ChatMax Pro</h1>
+                <p>Connect, chat, and collaborate seamlessly</p>
             </div>
 
             <!-- Login Form -->
             <div id="login-form" class="auth-form active">
-                <div class="form-tabs">
-                    <button class="tab-btn active" data-tab="email">Email</button>
-                    <button class="tab-btn" data-tab="phone">Phone</button>
-                    <button class="tab-btn" data-tab="google">Google</button>
-                </div>
-
-                <!-- Email Login -->
-                <form id="email-login-form" class="tab-content active" data-tab="email">
-                    <div class="form-group">
-                        <input type="email" id="email" class="form-control" placeholder="Email address" required>
+                <form id="email-login-form" class="auth-input-form">
+                    <div class="input-group">
                         <span class="material-icons">email</span>
+                        <input type="email" id="email" placeholder="Email address" required>
                     </div>
-                    <div class="form-group">
-                        <input type="password" id="password" class="form-control" placeholder="Password" required>
+                    <div class="input-group">
                         <span class="material-icons">lock</span>
-                        <button type="button" class="password-toggle" id="password-toggle">
+                        <input type="password" id="password" placeholder="Password" required>
+                        <button type="button" class="toggle-password" id="password-toggle">
                             <span class="material-icons">visibility</span>
                         </button>
                     </div>
-                    <button type="submit" class="btn btn--primary btn--full-width">Sign In</button>
-                    <p class="auth-switch">Don't have an account? <button type="button" id="show-register">Sign up</button></p>
+                    <button type="submit" class="btn btn--primary">Sign In</button>
                 </form>
 
-                <!-- Phone Login -->
-                <div id="phone-login-form" class="tab-content" data-tab="phone">
-                    <div class="form-group">
-                        <input type="tel" id="phone" class="form-control" placeholder="+1 (555) 123-4567" required>
-                        <span class="material-icons">phone</span>
-                    </div>
-                    <button type="button" id="send-otp" class="btn btn--primary btn--full-width">Send OTP</button>
-
-                    <div id="otp-verification" class="otp-section hidden">
-                        <div class="form-group">
-                            <input type="text" id="otp-code" class="form-control" placeholder="Enter OTP" maxlength="6">
-                            <span class="material-icons">sms</span>
-                        </div>
-                        <button type="button" id="verify-otp" class="btn btn--primary btn--full-width">Verify OTP</button>
-                    </div>
+                <div class="auth-divider">
+                    <span>or</span>
                 </div>
 
-                <!-- Google Login -->
-                <div id="google-login-form" class="tab-content" data-tab="google">
-                    <button type="button" id="google-signin-btn" class="btn btn--outline btn--full-width google-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
-                            <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>
-                            <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path>
-                            <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path>
-                            <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C42.022,36.218,44,30.608,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
-                        </svg>
-                        Continue with Google
-                    </button>
-                </div>
+                <button type="button" id="google-signin-btn" class="btn btn--outline google-btn">
+                    <svg width="20" height="20" viewBox="0 0 48 48">
+                        <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                        <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path>
+                        <path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path>
+                        <path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C42.022,36.218,44,30.608,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
+                    </svg>
+                    Continue with Google
+                </button>
+
+                <p class="auth-switch">
+                    Don't have an account?
+                    <button type="button" id="show-register" class="link-btn">Sign up</button>
+                </p>
             </div>
 
             <!-- Register Form -->
             <div id="register-form" class="auth-form">
                 <h2>Create Account</h2>
-                <form id="email-register-form">
-                    <div class="form-group">
-                        <input type="text" id="display-name" class="form-control" placeholder="Full Name" required>
+                <form id="email-register-form" class="auth-input-form">
+                    <div class="input-group">
                         <span class="material-icons">person</span>
+                        <input type="text" id="display-name" placeholder="Full Name" required>
                     </div>
-                    <div class="form-group">
-                        <input type="email" id="register-email" class="form-control" placeholder="Email address" required>
+                    <div class="input-group">
                         <span class="material-icons">email</span>
+                        <input type="email" id="register-email" placeholder="Email address" required>
                     </div>
-                    <div class="form-group">
-                        <input type="password" id="register-password" class="form-control" placeholder="Password (min 6 characters)" required>
+                    <div class="input-group">
                         <span class="material-icons">lock</span>
+                        <input type="password" id="register-password" placeholder="Password (min 6 characters)" required>
                     </div>
-                    <button type="submit" class="btn btn--primary btn--full-width">Create Account</button>
-                    <p class="auth-switch">Already have an account? <button type="button" id="show-login">Sign in</button></p>
+                    <button type="submit" class="btn btn--primary">Create Account</button>
                 </form>
+
+                <p class="auth-switch">
+                    Already have an account?
+                    <button type="button" id="show-login" class="link-btn">Sign in</button>
+                </p>
             </div>
         </div>
     </div>
 
     <!-- Main Chat Application -->
     <div id="chat-app" class="chat-app hidden">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="user-profile">
-                    <img id="current-user-avatar" class="avatar" src="" alt="Profile">
-                    <div class="user-info">
-                        <span id="current-user-name"></span>
-                        <span class="user-status online">Online</span>
+        <!-- Mobile Header -->
+        <header class="mobile-header">
+            <div class="header-left">
+                <button class="btn-icon" id="menu-toggle">
+                    <span class="material-icons">menu</span>
+                </button>
+                <h1 id="current-section-title">Chats</h1>
+            </div>
+            <div class="header-right">
+                <button class="btn-icon" id="search-toggle">
+                    <span class="material-icons">search</span>
+                </button>
+                <button class="btn-icon" id="theme-toggle">
+                    <span class="material-icons">dark_mode</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Mobile Search Bar -->
+        <div id="mobile-search" class="mobile-search hidden">
+            <div class="search-input-container">
+                <span class="material-icons">search</span>
+                <input type="text" id="global-search" placeholder="Search users, chats, messages..." class="form-control">
+                <button class="btn-icon" id="search-close">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="search-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="users">Users</button>
+                <button class="filter-btn" data-filter="messages">Messages</button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Chats Tab -->
+            <div id="chats-tab" class="tab-content active">
+                <div id="chats-list" class="content-list"></div>
+            </div>
+
+            <!-- People Tab -->
+            <div id="people-tab" class="tab-content">
+                <div class="people-search-container">
+                    <div class="search-box">
+                        <span class="material-icons">search</span>
+                        <input type="text" id="people-search" placeholder="Find people..." class="form-control">
+                    </div>
+                    <div class="advanced-search-toggle">
+                        <button class="btn btn--outline" id="advanced-search-btn">
+                            <span class="material-icons">tune</span>
+                            Advanced Search
+                        </button>
                     </div>
                 </div>
-                <div class="header-actions">
-                    <button class="btn-icon" id="new-chat-btn" title="New Chat">
-                        <span class="material-icons">add_comment</span>
+                <div id="people-list" class="content-list"></div>
+            </div>
+
+            <!-- Groups Tab -->
+            <div id="groups-tab" class="tab-content">
+                <div class="groups-header">
+                    <button class="btn btn--primary" id="create-group-btn">
+                        <span class="material-icons">group_add</span>
+                        Create Group
                     </button>
-                    <button class="btn-icon" id="settings-btn" title="Settings">
-                        <span class="material-icons">settings</span>
-                    </button>
-                    <button class="btn-icon" id="logout-btn" title="Logout">
-                        <span class="material-icons">logout</span>
-                    </button>
+                </div>
+                <div id="groups-list" class="content-list"></div>
+            </div>
+
+            <!-- Self Notes Tab -->
+            <div id="self-tab" class="tab-content">
+                <div class="self-notes-header">
+                    <h2>Note to Self</h2>
+                    <p>Your personal space for notes and reminders</p>
+                </div>
+                <div id="self-notes-list" class="content-list self-notes"></div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="tab-content">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <img id="profile-avatar" src="" alt="Profile" class="avatar large">
+                            <button class="change-avatar-btn">
+                                <span class="material-icons">camera_alt</span>
+                            </button>
+                        </div>
+                        <h2 id="profile-name">John Doe</h2>
+                        <p id="profile-email">john@example.com</p>
+                        <div class="profile-stats">
+                            <div class="stat">
+                                <span class="stat-value">12</span>
+                                <span class="stat-label">Chats</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">156</span>
+                                <span class="stat-label">Messages</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="profile-action-item" id="privacy-settings">
+                            <span class="material-icons">privacy_tip</span>
+                            <span>Privacy Settings</span>
+                            <span class="material-icons">chevron_right</span>
+                        </button>
+                        <button class="profile-action-item" id="notifications-settings">
+                            <span class="material-icons">notifications</span>
+                            <span>Notifications</span>
+                            <span class="material-icons">chevron_right</span>
+                        </button>
+                        <button class="profile-action-item" id="appearance-settings">
+                            <span class="material-icons">palette</span>
+                            <span>Appearance</span>
+                            <span class="material-icons">chevron_right</span>
+                        </button>
+                        <button class="profile-action-item" id="logout-btn">
+                            <span class="material-icons">logout</span>
+                            <span>Sign Out</span>
+                            <span class="material-icons">chevron_right</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="search-container">
-                <div class="search-box">
-                    <span class="material-icons">search</span>
-                    <input type="text" id="search-users" placeholder="Search users..." class="form-control">
-                </div>
-            </div>
-
-            <div class="chat-tabs">
-                <button class="tab-btn active" data-tab="chats">Chats</button>
-                <button class="tab-btn" data-tab="users">Users</button>
-            </div>
-
-            <div class="sidebar-content">
-                <div id="chats-list" class="tab-content active" data-tab="chats"></div>
-                <div id="users-list" class="tab-content" data-tab="users"></div>
-            </div>
-        </aside>
-
-        <!-- Main Chat Area -->
-        <main class="chat-main">
-            <!-- Welcome Screen -->
-            <div id="welcome-screen" class="welcome-screen">
-                <div class="welcome-content">
-                    <div class="logo-large">💬</div>
-                    <h2>Welcome to ChatMax</h2>
-                    <p>Select a conversation from the sidebar to start chatting</p>
-                </div>
-            </div>
-
-            <!-- Active Chat -->
-            <div id="active-chat" class="active-chat hidden">
+            <!-- Chat Window -->
+            <div id="chat-window" class="chat-window hidden">
                 <div class="chat-header">
-                    <button class="btn-icon mobile-back" id="mobile-back">
+                    <button class="btn-icon" id="chat-back">
                         <span class="material-icons">arrow_back</span>
                     </button>
                     <div class="chat-user-info">
-                        <img id="chat-user-avatar" class="avatar" src="" alt="User">
-                        <div>
-                            <h3 id="chat-user-name"></h3>
-                            <span id="chat-user-status" class="user-status"></span>
+                        <img id="chat-avatar" class="avatar" src="" alt="User">
+                        <div class="chat-user-details">
+                            <h3 id="chat-name">User Name</h3>
+                            <span id="chat-status" class="status-text">Online</span>
                             <span id="typing-indicator" class="typing-indicator hidden">typing...</span>
                         </div>
                     </div>
                     <div class="chat-actions">
-                        <button class="btn-icon" id="voice-call-btn" title="Voice Call">
+                        <button class="btn-icon" id="voice-call">
                             <span class="material-icons">call</span>
                         </button>
-                        <button class="btn-icon" id="video-call-btn" title="Video Call">
+                        <button class="btn-icon" id="video-call">
                             <span class="material-icons">videocam</span>
                         </button>
-                        <button class="btn-icon" id="chat-menu-btn" title="More">
+                        <button class="btn-icon" id="chat-menu">
                             <span class="material-icons">more_vert</span>
                         </button>
                     </div>
                 </div>
 
-                <div id="messages-container" class="messages-container"></div>
+                <div id="messages-container" class="messages-container">
+                    <div class="messages-wrapper" id="messages-wrapper"></div>
+                </div>
 
-                <div class="message-input-container">
-                    <button class="btn-icon" id="attach-file-btn" title="Attach File">
+                <div class="message-input-area">
+                    <button class="btn-icon" id="attach-btn">
                         <span class="material-icons">attach_file</span>
                     </button>
-                    <button class="btn-icon" id="emoji-btn" title="Emoji">
-                        <span class="material-icons">sentiment_satisfied_alt</span>
-                    </button>
-                    <div class="message-input-wrapper">
+                    <div class="input-container">
                         <textarea id="message-input" class="message-input" placeholder="Type a message..." rows="1"></textarea>
-                        <button class="btn-icon" id="voice-record-btn" title="Voice Message">
-                            <span class="material-icons">mic</span>
+                        <button class="btn-icon emoji-btn" id="emoji-btn">
+                            <span class="material-icons">sentiment_satisfied</span>
                         </button>
                     </div>
-                    <button id="send-message-btn" class="btn btn--primary send-btn">
+                    <button class="btn-icon voice-btn" id="voice-btn">
+                        <span class="material-icons">mic</span>
+                    </button>
+                    <button class="btn-icon send-btn" id="send-btn">
                         <span class="material-icons">send</span>
                     </button>
                 </div>
             </div>
         </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-tab="chats">
+                <span class="material-icons">chat</span>
+                <span class="nav-label">Chats</span>
+            </button>
+            <button class="nav-item" data-tab="people">
+                <span class="material-icons">people</span>
+                <span class="nav-label">People</span>
+            </button>
+            <button class="nav-item" data-tab="groups">
+                <span class="material-icons">groups</span>
+                <span class="nav-label">Groups</span>
+            </button>
+            <button class="nav-item" data-tab="self">
+                <span class="material-icons">note</span>
+                <span class="nav-label">Self</span>
+            </button>
+            <button class="nav-item" data-tab="profile">
+                <span class="material-icons">person</span>
+                <span class="nav-label">Profile</span>
+            </button>
+        </nav>
+
+        <!-- Floating Action Button -->
+        <button class="fab" id="main-fab">
+            <span class="material-icons">add</span>
+        </button>
+
+        <!-- FAB Menu -->
+        <div class="fab-menu hidden" id="fab-menu">
+            <button class="fab-option" id="new-chat-fab">
+                <span class="material-icons">chat</span>
+                <span class="fab-label">New Chat</span>
+            </button>
+            <button class="fab-option" id="new-group-fab">
+                <span class="material-icons">group_add</span>
+                <span class="fab-label">New Group</span>
+            </button>
+            <button class="fab-option" id="self-note-fab">
+                <span class="material-icons">edit_note</span>
+                <span class="fab-label">Quick Note</span>
+            </button>
+        </div>
     </div>
 
-    <!-- File Upload Modal -->
-    <div id="file-modal" class="modal hidden">
+    <!-- Modals -->
+    <!-- Advanced Search Modal -->
+    <div id="advanced-search-modal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Share File</h3>
+                <h3>Advanced Search</h3>
                 <button class="btn-icon modal-close">
                     <span class="material-icons">close</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="file-upload-area" id="file-upload-area">
-                    <span class="material-icons">cloud_upload</span>
-                    <p>Drag and drop files here or click to browse</p>
-                    <input type="file" id="file-input" multiple accept="image/*,video/*,.pdf,.doc,.docx,.txt">
+                <div class="form-group">
+                    <label class="form-label">Search by name or email</label>
+                    <input type="text" class="form-control" id="advanced-name-search" placeholder="Enter name or email">
                 </div>
-                <div id="file-preview" class="file-preview"></div>
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" class="form-control" id="advanced-location-search" placeholder="City or country">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mutual connections</label>
+                    <select class="form-control" id="mutual-connections">
+                        <option value="">Any</option>
+                        <option value="yes">Has mutual connections</option>
+                        <option value="no">No mutual connections</option>
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn--outline" id="cancel-upload">Cancel</button>
-                <button class="btn btn--primary" id="send-files">Send Files</button>
+                <button class="btn btn--outline" id="clear-search">Clear</button>
+                <button class="btn btn--primary" id="apply-search">Search</button>
             </div>
         </div>
     </div>
 
-    <!-- New Chat Modal -->
-    <div id="new-chat-modal" class="modal hidden">
+    <!-- Create Group Modal -->
+    <div id="create-group-modal" class="modal hidden">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Start New Chat</h3>
+                <h3>Create Group</h3>
                 <button class="btn-icon modal-close">
                     <span class="material-icons">close</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="search-box">
-                    <span class="material-icons">search</span>
-                    <input type="text" id="new-chat-search" placeholder="Search users..." class="form-control">
+                <div class="form-group">
+                    <label class="form-label">Group Name</label>
+                    <input type="text" class="form-control" id="group-name" placeholder="Enter group name">
                 </div>
-                <div id="new-chat-users" class="users-grid"></div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="group-description" placeholder="Optional description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Privacy</label>
+                    <select class="form-control" id="group-privacy">
+                        <option value="public">Public - Anyone can join</option>
+                        <option value="private">Private - Invite only</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Add Members</label>
+                    <input type="text" class="form-control" id="invite-emails" placeholder="Enter email addresses separated by commas">
+                    <small class="form-text">Users will receive email invitations to join</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--outline modal-close">Cancel</button>
+                <button class="btn btn--primary" id="create-group-submit">Create Group</button>
             </div>
         </div>
     </div>
 
     <!-- Voice Recording Modal -->
-    <div id="voice-modal" class="modal hidden">
-        <div class="modal-content voice-modal">
-            <div class="voice-recording">
-                <div class="recording-animation">
-                    <div class="pulse"></div>
-                    <span class="material-icons">mic</span>
-                </div>
-                <div class="recording-info">
-                    <span id="recording-time">00:00</span>
-                    <p>Recording voice message...</p>
-                </div>
-                <div class="recording-controls">
-                    <button class="btn btn--outline" id="cancel-recording">Cancel</button>
-                    <button class="btn btn--primary" id="stop-recording">Stop & Send</button>
-                </div>
+    <div id="voice-recording-modal" class="modal hidden">
+        <div class="modal-content voice-recording">
+            <div class="recording-animation">
+                <div class="recording-pulse"></div>
+                <span class="material-icons recording-icon">mic</span>
+            </div>
+            <div class="recording-info">
+                <div class="recording-time" id="recording-time">00:00</div>
+                <p>Recording voice message...</p>
+            </div>
+            <div class="recording-controls">
+                <button class="btn btn--outline" id="cancel-recording">
+                    <span class="material-icons">close</span>
+                    Cancel
+                </button>
+                <button class="btn btn--primary" id="send-recording">
+                    <span class="material-icons">send</span>
+                    Send
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Hidden file input for file uploads -->
+    <!-- File Upload Modal -->
+    <div id="file-upload-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Share Files</h3>
+                <button class="btn-icon modal-close">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="file-drop-zone" id="file-drop-zone">
+                    <span class="material-icons">cloud_upload</span>
+                    <p>Drop files here or tap to browse</p>
+                    <input type="file" id="file-input" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.txt">
+                </div>
+                <div id="file-preview" class="file-preview-container"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--outline modal-close">Cancel</button>
+                <button class="btn btn--primary" id="upload-files">Share Files</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Settings Modal -->
+    <div id="privacy-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Privacy Settings</h3>
+                <button class="btn-icon modal-close">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="privacy-setting">
+                    <div class="setting-info">
+                        <h4>Who can message you</h4>
+                        <p>Control who can start new conversations</p>
+                    </div>
+                    <select class="form-control" id="message-privacy">
+                        <option value="everyone">Everyone</option>
+                        <option value="contacts">Contacts only</option>
+                        <option value="nobody">Nobody</option>
+                    </select>
+                </div>
+                <div class="privacy-setting">
+                    <div class="setting-info">
+                        <h4>Last seen</h4>
+                        <p>Show when you were last active</p>
+                    </div>
+                    <select class="form-control" id="last-seen-privacy">
+                        <option value="everyone">Everyone</option>
+                        <option value="contacts">Contacts only</option>
+                        <option value="nobody">Nobody</option>
+                    </select>
+                </div>
+                <div class="privacy-setting">
+                    <div class="setting-info">
+                        <h4>Read receipts</h4>
+                        <p>Show when you've read messages</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="read-receipts" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--primary modal-close">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input -->
     <input type="file" id="hidden-file-input" style="display: none;" multiple>
 
-    <!-- Scripts -->
     <script type="module" src="app.js"></script>
 </body>
 </html>
